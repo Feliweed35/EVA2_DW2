@@ -1,49 +1,428 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Recursos Humanos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </head>
-  <body>
-   <nav class="navbar navbar-expand-lg" data-bs-theme="dark" style="background-color: #21BDED;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#"><img src="https://img.freepik.com/vector-gratis/dos-hojas-azules_78370-6256.jpg" alt="Logo" style="max-width: 40px;"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Simulador</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Trabajadores</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Liquidaciones</a>
-        </li>
-      </ul>
+    <style>
+        body {
+            background: linear-gradient(45deg, #21BDED 0%, #1a9bc7 50%, #21BDED 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .content-wrapper {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            margin: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+        
+        .header-section {
+            background: linear-gradient(135deg, #21BDED, #1a9bc7);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .form-container {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px;
+        }
+        
+        .section-title {
+            color: #21BDED;
+            border-bottom: 3px solid #21BDED;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        
+        .custom-select {
+            background: #ffffff;
+            border: 2px solid #21BDED;
+            border-radius: 8px;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .custom-select:focus {
+            border-color: #1a9bc7;
+            box-shadow: 0 0 0 0.25rem rgba(33, 189, 237, 0.2);
+            transform: scale(1.02);
+        }
+        
+        .form-control-custom {
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control-custom:focus {
+            border-color: #21BDED;
+            box-shadow: 0 0 0 0.25rem rgba(33, 189, 237, 0.15);
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(45deg, #21BDED, #1a9bc7);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(33, 189, 237, 0.3);
+        }
+        
+        .btn-primary-custom:hover {
+            background: linear-gradient(45deg, #1a9bc7, #21BDED);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 189, 237, 0.4);
+            color: white;
+        }
+        
+        .table-section {
+            margin: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .table-header-alt {
+            background: linear-gradient(90deg, #21BDED, #1a9bc7, #21BDED);
+            color: white;
+            padding: 20px;
+            border-bottom: 4px solid rgba(255,255,255,0.3);
+        }
+        
+        .table-striped-custom tbody tr:nth-of-type(odd) {
+            background-color: rgba(33, 189, 237, 0.05);
+        }
+        
+        .table-striped-custom tbody tr:hover {
+            background-color: rgba(33, 189, 237, 0.15);
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+        
+        .badge-custom {
+            background: #21BDED;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .btn-action-alt {
+            background: none;
+            border: 2px solid transparent;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .btn-edit-alt {
+            color: #21BDED;
+            border-color: rgba(33, 189, 237, 0.3);
+        }
+        
+        .btn-edit-alt:hover {
+            background: #21BDED;
+            color: white;
+            transform: rotate(15deg);
+        }
+        
+        .btn-delete-alt {
+            color: #dc3545;
+            border-color: rgba(220, 53, 69, 0.3);
+        }
+        
+        .btn-delete-alt:hover {
+            background: #dc3545;
+            color: white;
+            transform: rotate(-15deg);
+        }
+        
+        .input-group-custom {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .floating-label {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            background: white;
+            padding: 0 5px;
+        }
+        
+        .form-control-custom:focus + .floating-label,
+        .form-control-custom:not(:placeholder-shown) + .floating-label {
+            top: -8px;
+            font-size: 12px;
+            color: #21BDED;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg" data-bs-theme="dark" style="background-color: #21BDED;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="https://img.freepik.com/vector-gratis/dos-hojas-azules_78370-6256.jpg" alt="Logo" style="max-width: 40px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Simulador</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Trabajadores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Liquidaciones</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="content-wrapper">
+
+
+        <!-- Formulario de registro -->
+        <div class="form-container">
+            <h4 class="section-title">✨ Registro de Nuevo Empleado</h4>
+            
+            <!-- Fila 1: Información Personal -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="input-group-custom">
+                        <input type="text" class="form-control form-control-custom" id="nombres" placeholder=" ">
+                        <label class="floating-label">Nombres Completos</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group-custom">
+                        <input type="text" class="form-control form-control-custom" id="apellidos" placeholder=" ">
+                        <label class="floating-label">Apellidos Completos</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group-custom">
+                        <input type="text" class="form-control form-control-custom" id="rut" placeholder=" ">
+                        <label class="floating-label">RUT (12.345.678-9)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila 2: Información Laboral -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold text-muted">🏢 Empresa</label>
+                    <select class="form-select custom-select" id="empresa">
+                        <option value="">-- Seleccione Empresa --</option>
+                        <option value="TechCorp S.A.">TechCorp S.A.</option>
+                        <option value="Innovate Solutions">Innovate Solutions</option>
+                        <option value="Digital Partners">Digital Partners</option>
+                        <option value="Global Services">Global Services</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold text-muted">💼 Tipo de Contrato</label>
+                    <select class="form-select custom-select" id="tipo_contrato">
+                        <option value="">-- Tipo de Contrato --</option>
+                        <option value="Indefinido">Contrato Indefinido</option>
+                        <option value="Plazo Fijo">Plazo Fijo</option>
+                        <option value="Honorarios">Por Honorarios</option>
+                        <option value="Part Time">Medio Tiempo</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold text-muted">🏥 Sistema de Salud</label>
+                    <select class="form-select custom-select" id="sistema_salud">
+                        <option value="">-- Sistema de Salud --</option>
+                        <option value="FONASA">FONASA</option>
+                        <option value="Isapre Banmedica">Isapre Banmédica</option>
+                        <option value="Isapre Vida Tres">Isapre Vida Tres</option>
+                        <option value="Isapre Colmena">Isapre Colmena</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold text-muted">🏦 AFP</label>
+                    <select class="form-select custom-select" id="afp">
+                        <option value="">-- Seleccione AFP --</option>
+                        <option value="AFP Habitat">AFP Habitat</option>
+                        <option value="AFP Provida">AFP Provida</option>
+                        <option value="AFP Cuprum">AFP Cuprum</option>
+                        <option value="AFP Capital">AFP Capital</option>
+                        <option value="AFP PlanVital">AFP PlanVital</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Fila 3: Fechas y Sueldo -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="input-group-custom">
+                        <input type="date" class="form-control form-control-custom" id="fecha_nacimiento" placeholder=" ">
+                        <label class="floating-label">Fecha de Nacimiento</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group-custom">
+                        <input type="date" class="form-control form-control-custom" id="fecha_inicio" placeholder=" ">
+                        <label class="floating-label">Fecha de Inicio</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group-custom">
+                        <input type="date" class="form-control form-control-custom" id="fecha_termino" placeholder=" ">
+                        <label class="floating-label">Fecha de Término (Opcional)</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group-custom">
+                        <input type="number" class="form-control form-control-custom" id="sueldo_base" placeholder=" " min="0">
+                        <label class="floating-label">Sueldo Base ($)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dirección -->
+            <div class="row g-4 mb-4">
+                <div class="col-12">
+                    <div class="input-group-custom">
+                        <input type="text" class="form-control form-control-custom" id="direccion" placeholder=" ">
+                        <label class="floating-label">Dirección Completa</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-start">
+                <button class="btn btn-primary-custom" onclick="registrarEmpleado()">
+                    ➕ REGISTRAR EMPLEADO
+                </button>
+            </div>
+        </div>
+        
+        <!-- Tabla de empleados -->
+        <div class="table-section">
+            <div class="table-header-alt">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 fw-bold">👥 Listado de Empleados</h4>
+                    <span class="badge badge-custom">Total: <span id="total-empleados">3</span></span>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped-custom mb-0">
+                    <thead style="background: #f8f9fa;">
+                        <tr>
+                            
+                            <th class="fw-semibold">NOMBRE COMPLETO</th>
+                            <th class="fw-semibold">RUT</th>
+                            <th class="fw-semibold">EMPRESA</th>
+                            <th class="fw-semibold">CONTRATO</th>
+                            <th class="fw-semibold">F. INICIO</th>
+                            <th class="fw-semibold">F. TÉRMINO</th>
+                            <th class="fw-semibold">SUELDO BASE</th>
+                            <th class="fw-semibold">AFP</th>
+                            <th class="fw-semibold">SALUD</th>
+                            <th class="fw-semibold">DIRECCIÓN</th>
+                            <th class="fw-semibold text-center">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody id="empleados-tbody">
+                        <tr>
+                            <td></td>
+                            <td><strong></strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-action-alt btn-edit-alt" onclick="editarEmpleado(1)" title="Editar">✏️</button>
+                                    <button class="btn-action-alt btn-delete-alt" onclick="eliminarEmpleado(1)" title="Eliminar">🗑️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><strong></strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-action-alt btn-edit-alt" onclick="editarEmpleado(2)" title="Editar">✏️</button>
+                                    <button class="btn-action-alt btn-delete-alt" onclick="eliminarEmpleado(2)" title="Eliminar">🗑️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><strong></strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-action-alt btn-edit-alt" onclick="editarEmpleado(3)" title="Editar">✏️</button>
+                                    <button class="btn-action-alt btn-delete-alt" onclick="eliminarEmpleado(3)" title="Eliminar">🗑️</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
-</nav>
-<select class="form-select form-select-sm custom-select-sm" aria-label=".form-select-sm example">
-    <option selected>Open this select menu</option>
-    <option value="1">Nombres</option>
-    <option value="2">Apellidos</option>
-    <option value="3">Rut</option>
-    <option value="4">Direccion</option>
-  </select>
-  
-  <style>
-    .custom-select-sm {
-      font-size: 0.75rem;   
-      padding: 0.15rem 0.5rem; 
-      height: auto;         
-      width: 170px;          
-    }
-  </style>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  </body>
-</html>
