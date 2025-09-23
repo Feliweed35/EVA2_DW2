@@ -5,18 +5,22 @@ router = APIRouter(prefix="/empleados", tags=["Empleados"])
 
 @router.get("/")
 def list_empleados():
-    empleados = EmpleadosModel.get_all()
-    return empleados
+    return EmpleadosModel.get_all()
 
 @router.post("/")
-def create_empleado(username: str, email: str):
-    #Campos Obligatorios:
-    campos_obligatorios = [email]
-    if not all(campos_obligatorios):
+def create_empleado(
+    nombres: str,
+    apellidos: str,
+    rut: str,
+    fecha_nacimiento: str,
+    direccion: str
+):
+    # Validar obligatorios
+    if not all([nombres, apellidos, rut, fecha_nacimiento, direccion]):
         raise HTTPException(status_code=400, detail="Todos los campos son obligatorios")
-        
-    #Crear empleado:
-    success = EmpleadosModel.create(username, email)
+
+    success = EmpleadosModel.create(nombres, apellidos, rut, fecha_nacimiento, direccion)
     if not success:
-        raise HTTPException(status_code=500, detail="Empleado could not be created")
-    return {"message": "Empleado created successfully"}
+        raise HTTPException(status_code=500, detail="Empleado no pudo ser creado")
+
+    return {"message": "Empleado creado con éxito"}
